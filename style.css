@@ -14,3 +14,49 @@ body{
         
     );
 }
+
+.board{
+    display: grid;
+    width: 100%;
+    height:100% ;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(3, auto);
+}
+
+.cell {
+    width: 5rem;
+    height: 5rem;
+    border: solid 2px white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cell:nth-child(1),
+.cell:nth-child(2),
+.cell:nth-child(3) {
+    border-top: none;
+}
+.cell:nth-child(1),
+.cell:nth-child(4),
+.cell:nth-child(7) {
+    border-left: none;
+}
+
+.cell:nth-child(3),
+.cell:nth-child(6),
+.cell:nth-child(9) {
+    border-right: none;
+}
+
+.cell:nth-child(7),
+.cell:nth-child(8),
+.cell:nth-child(9) {
+    border-bottom: none;
+}
+.winning-message {
+    display: none;
+}
