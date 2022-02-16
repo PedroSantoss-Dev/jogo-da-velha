@@ -14,7 +14,7 @@ body{
         
     );
 }
-
+/* board */
 .board{
     display: grid;
     width: 100%;
@@ -25,7 +25,7 @@ body{
     align-items: center;
     grid-template-columns: repeat(3, auto);
 }
-
+/* cellula */
 .cell {
     width: 5rem;
     height: 5rem;
@@ -33,6 +33,11 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+}
+.cell.x,
+.cell.circle{
+    cursor: not-allowed;
 }
 
 .cell:nth-child(1),
@@ -57,6 +62,36 @@ body{
 .cell:nth-child(9) {
     border-bottom: none;
 }
+/* x */
+.cell.x::before,
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::after,
+.board.x .cell:not(.x):not(.circle):hover::before{
+   content: "";
+   height: calc(5rem * 0.1);
+   width: calc(4rem  * 0.5);
+   position: absolute;
+   background-color: white;
+}
+.cell.x::before,
+.board.x .cell:not(.x):not(.circle):hover::before{
+    transform: rotate(45deg);
+}
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::after{
+   transform: rotate(-45deg);
+}
+/* circle */
+.cell.circle::before,
+.cell.circle::after{
+   content: "";
+   height: calc(5rem * 0.5);
+   width: calc(4rem  * 0.5);
+   position: absolute;
+   background-color: white;
+   border-radius: 50%;
+}
+
 .winning-message {
     display: none;
 }
