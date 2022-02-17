@@ -36,7 +36,7 @@ const endGame = (isDrow) => {
     if(isDrow){
         winningTextElement.innerHTML = 'Empate'
     }else{
-       winningTextElement.innerHTML = isCircle ? 'circle venceu':'x venceu';
+       winningTextElement.innerHTML = isCircle ? 'O venceu':'X venceu';
     }
 
     winningtElement.classList.add('show-winning-message')
@@ -47,9 +47,15 @@ const checkForWin = (currentPlayer) => {
      return winningcombinations.some((combination) => {
          return combination.every((index) => {
              return cellElements[index].classList.contains(currentPlayer);
-         })
-     })
-}
+         });
+     });
+};
+
+checkForDrow = () => {
+    return [...cellElements].every((cell) => {
+      return  cell.classList.contains("x") || cell.classList.contains("circle")
+    });
+};
 
 const placeMark =  (cell, classToAdd) => {
     cell.classList.add(classToAdd);
@@ -76,17 +82,24 @@ const handleClick = (e) =>{
     const cell = e.target;
     const classToAdd = isCircle ? 'circle':'x';
     
-
     placeMark(cell, classToAdd)
-    //verificar por vitoria ou empate
+    
+    //verificar por vitoria 
     const isWin = checkForWin(classToAdd);
+
+    //verificar por empate
+    const isDrow = checkForDrow();
+
     if (isWin) {
         endGame(false)
+    }else if(isDrow) {
+        endGame(true)
+    } else {
+        //mudar marca
+        swapTurns();
     }
-    //mudar marca
-    swapTurns();
+
 } 
 
 startGame()
 btn.addEventListener('click', startGame);
-
