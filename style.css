@@ -125,7 +125,11 @@ body{
     border-radius: 0.3rem;
     border: none;
 }
-.winning-message button:hover{
+.winning-message .btn:hover{
     background-color: rgba(22, 255, 158, 0.767);
     color: black;
+}
+
+.show-winning-message{
+    display: flex;
 }

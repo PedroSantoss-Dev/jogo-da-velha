@@ -1,5 +1,9 @@
 const cellElements = document.querySelectorAll('[data-cell]');
 const board = document.querySelector('[data-board]');
+const winningtElement = document.querySelector('[ data-winning-message]');
+const winningTextElement = document.querySelector('[ data-winning-message-text]');
+const btn = document.querySelector('[ data-btn]');
+
 
 let isCircle;
 
@@ -15,14 +19,29 @@ const winningcombinations = [
 ];
 
 const startGame = () => {
+    isCircle = false;
     for(const cell of cellElements) {
+        cell.classList.remove('circle');
+        cell.classList.remove('x');
+        cell.removeEventListener('click', handleClick);
         cell.addEventListener("click", handleClick, {once: true})
     }
 
-    isCircle = false;
-
+    setBoardHover()
     board.classList.add('x')
+    winningtElement.classList.remove('show-winning-message')
 }
+
+const endGame = (isDrow) => {
+    if(isDrow){
+        winningTextElement.innerHTML = 'Empate'
+    }else{
+       winningTextElement.innerHTML = isCircle ? 'circle venceu':'x venceu';
+    }
+
+    winningtElement.classList.add('show-winning-message')
+}
+ 
 
 const checkForWin = (currentPlayer) => {
      return winningcombinations.some((combination) => {
@@ -35,8 +54,7 @@ const checkForWin = (currentPlayer) => {
 const placeMark =  (cell, classToAdd) => {
     cell.classList.add(classToAdd);
 }
-const swapTurns = () => {
-    isCircle = !isCircle;
+const setBoardHover = () => {
     board.classList.remove('circle');
     board.classList.remove('x');
 
@@ -47,6 +65,12 @@ const swapTurns = () => {
     }
 }
 
+const swapTurns = () => {
+    isCircle = !isCircle;
+    setBoardHover()
+    
+}
+
 const handleClick = (e) =>{
     //colocar marca  (x ou circle)
     const cell = e.target;
@@ -54,14 +78,15 @@ const handleClick = (e) =>{
     
 
     placeMark(cell, classToAdd)
-    //verificar por vitoria
+    //verificar por vitoria ou empate
     const isWin = checkForWin(classToAdd);
     if (isWin) {
-        console.log('winner')
+        endGame(false)
     }
     //mudar marca
     swapTurns();
 } 
 
 startGame()
+btn.addEventListener('click', startGame);
 
